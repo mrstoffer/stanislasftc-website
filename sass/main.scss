@@ -5,6 +5,7 @@ $sta: #4285f4;
 $instagram: #C13584;
 $fullblack: #000000;
 $github: #333;
+$youtube:#FF0000;
 
 // import functions and variables
 @import '../node_modules/bootstrap/scss/_functions';
@@ -16,7 +17,8 @@ $custom-theme-colors: (
     "sta": $sta,
     "instagram": $instagram,
     "fullblack": $fullblack,
-    "github": $github
+    "github": $github,
+    "youtube": $youtube,
 );
 
 $theme-colors: map-merge($custom-theme-colors, $theme-colors);

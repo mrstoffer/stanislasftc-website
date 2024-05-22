@@ -17,34 +17,17 @@
       </div>
       <div class="row justify-content-md-center">
         <div class="col-12 col-md-9 text-center">
-          <p class="lead">Wij zijn de robotica teams van het Stanislascollege Westplantsoen in Delft, die meedoen aan de First Tech Challenge. Onze teams bestaan uit 14-18 jarige leerlingen uit de bovenbouw van HAVO en VWO</p>
+          <p class="lead">Wij zijn de robotica teams van het Stanislascollege Westplantsoen in Delft, die meedoen aan de First Tech Challenge. Onze teams bestaan uit 14-18 jarige leerlingen uit de bovenbouw van HAVO en VWO.</p>
         </div>
       </div>
-      <Waypoint @change="initCounters">
-        <div class="row justify-content-md-center my-4">
-          <div class="col-3 col-xxl-1 text-center">
-            <h1><vue3-autocounter ref="counter1" :startAmount="0" :endAmount="2" :duration="1" prefix="" suffix="" separator="" decimalSeparator="" :decimals="0" :autoinit="false" /></h1>
-            teams
-          </div>
-          <div class="col-3 col-xxl-1 text-center">
-            <h1><vue3-autocounter ref="counter2" :startAmount="0" :endAmount="22" :duration="1" prefix="" suffix="" separator="" decimalSeparator="" :decimals="0" :autoinit="false" /></h1>
-            leden
-          </div>
-          <div class="col-3 col-xxl-1 text-center">
-            <h1><vue3-autocounter ref="counter3" :startAmount="0" :endAmount="14" :duration="1" prefix="" suffix="" separator="" decimalSeparator="" :decimals="0" :autoinit="false" /></h1>
-            jaar
-          </div>
-          <div class="col-3 col-xxl-1 text-center">
-            <h1><vue3-autocounter ref="counter4" :startAmount="0" :endAmount="2093" :duration="1" prefix="" suffix="" separator="" decimalSeparator="" :decimals="0" :autoinit="false" /></h1>
-            uren
-          </div>
-        </div>
-      </Waypoint>
       <div class="row justify-content-md-center">
         <div class="col-12 col-md-9 text-center mt-4">
           <router-link to="/about" class="btn btn-outline-light text-light">Lees meer over ons</router-link>
         </div>
       </div>
+      <!-- <Waypoint @change="initCounters">
+        
+      </Waypoint> -->
     </div>
   </section>
 
@@ -139,7 +122,7 @@
           <div class="row justify-content-md-center">
             <div class="col-12 col-md-10 col-xxl-8 text-center">
               <h3 class="border-start border-5 border-fullblack my-0 px-3"><strong>Stanislas Tech Team</strong></h3>
-              <h4 class="border-start border-5 border-fullblack px-3">#18710</h4>
+              <h4 class="border-start border-5 border-fullblack px-3">#18859</h4>
             </div>
           </div>
         </div>
@@ -147,7 +130,7 @@
           <div class="row justify-content-md-center">
             <div class="col-12 col-md-10 col-xxl-8 text-center">
               <h3 class="border-end border-5 border-white my-0 px-3"><strong>Stanislas Tech Academy</strong></h3>
-              <h4 class="border-end border-5 border-white px-3">#18859</h4>
+              <h4 class="border-end border-5 border-white px-3">#18710</h4>
             </div>
           </div>
         </div>
@@ -181,6 +164,14 @@
     </div>
   </section> -->
 
+  <section id="countdown">
+    <div class="container-fluid border-bottom border-primary border-5">
+      <div class="row justify-content-md-center my-4">
+        <Countdown/>
+      </div>
+    </div>
+  </section>
+
   <section id="news">
     <div class="container-fluid">
       <div class="row justify-content-md-center">
@@ -191,7 +182,7 @@
     </div>
     <div class="container-fluid" style="padding-top: 0; padding-bottom:0">
       <div class="row justify-content-center">
-        <div v-for="post in posts.slice(0, 3)" :key="post.slug" class="col-8 col-md-6 col-lg-4 col-xxl-2 text-center mb-3">
+        <div v-for="post in posts.slice(0, 3)" :key="post.slug" class="col-8 col-md-6 col-xxl-2 text-center mb-3">
           <NewsCard :post="post"/>
         </div>
       </div>
@@ -217,14 +208,16 @@ import { useStore } from 'vuex'
 import axios from 'axios'
 import NewsCard from '@/components/NewsCard.vue'
 import { Waypoint } from 'vue-waypoint'
+import Countdown from '@/components/Countdown.vue'
 
 
 export default {
   name: 'HomeView',
   components: {
     NewsCard,
-    Waypoint
-  },
+    Waypoint,
+    Countdown
+},
   setup() {
     const store = useStore()
 
@@ -239,9 +232,12 @@ export default {
 
     onMounted(() => {
       store.dispatch('fetchPosts')
+      store.dispatch('fetchEventDate')
     })
 
     const posts = computed(() => store.state.posts)
+    const eventDate = computed(() => new Date(store.state.eventDate))
+    console.log(store.state.eventDate)
 
     const counter1 = ref()
     const counter2 = ref()
@@ -251,25 +247,25 @@ export default {
     const counting = ref(false)
 
     const moveDown = () => {
-      let y = document.getElementById("welcome").getBoundingClientRect().top + window.pageYOffset - 60;
+      let y = document.getElementById("teams").getBoundingClientRect().top + window.pageYOffset - 60;
       window.scrollTo({ top: y, behavior: 'smooth'})
     }
 
-    const initCounters = (waypointState) => {
-      console.log(waypointState.going);
-      console.log(counting.value);
-      if (waypointState.going == "IN") {
-        if (!counting.value) {
-          counting.value = true
-          counter1.value.start()
-          counter2.value.start()
-          counter3.value.start()
-          counter4.value.start()
-        }
-      }
-    }
+    // const initCounters = (waypointState) => {
+    //   console.log(waypointState.going);
+    //   console.log(counting.value);
+    //   if (waypointState.going == "IN") {
+    //     if (!counting.value) {
+    //       counting.value = true
+    //       counter1.value.start()
+    //       counter2.value.start()
+    //       counter3.value.start()
+    //       counter4.value.start()
+    //     }
+    //   }
+    // }
 
-    return { posts, moveDown, counter1, counter2, counter3, counter4, initCounters }
+    return { posts, moveDown, /* counter1, counter2, counter3, counter4, initCounters,*/ eventDate }
   }
 }
 </script>

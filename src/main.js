@@ -15,6 +15,7 @@ import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 import { faTiktok } from "@fortawesome/free-brands-svg-icons";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
+import { faYoutube } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 import Vue3Autocounter from 'vue3-autocounter';
@@ -23,5 +24,6 @@ library.add(faEnvelope);
 library.add(faInstagram);
 library.add(faTiktok);
 library.add(faGithub);
+library.add(faYoutube);
 
 createApp(App).use(store).use(router).use(VueAxios, axios).component("font-awesome-icon", FontAwesomeIcon).component('vue3-autocounter', Vue3Autocounter).mount('#app')
